@@ -6,20 +6,26 @@ Study notes made from Eve's recorded lectures. Each lecture becomes a **transcri
 
 ## Lectures
 
-All PDFs are in [`output/`](output/), named by course week and topic (`Week_04_Analyzing_EKG_Rhythm_Strips.pdf`, with `_2` for a second lecture in the same week).
+All PDFs are in [`output/`](output/), named by course week and topic (`Week_04_Analyzing_EKG_Rhythm_Strips.pdf`, with `_2` for a second lecture in the same week). Each lecture has two PDFs:
 
-| Week | Lecture | PDF |
-|---|---|---|
-| 1 | Cardiac Anatomy and Physiology: Appendix A, 22 min | [Week_01_Cardiac_Anatomy_and_Physiology.pdf](output/Week_01_Cardiac_Anatomy_and_Physiology.pdf) |
-| 1 | Electrophysiology: Chapter 1, 27 min (also posted under Week 2) | [Week_01_2_Electrophysiology.pdf](output/Week_01_2_Electrophysiology.pdf) |
-| 2 | 12 Lead EKGs: Appendix C, 26 min | [Week_02_12_Lead_EKGs.pdf](output/Week_02_12_Lead_EKGs.pdf) |
-| 3 | Waves and Measurements: Chapter 2, 33 min (first part of the Week 3 recording) | [Week_03_Waves_and_Measurements.pdf](output/Week_03_Waves_and_Measurements.pdf) |
-| 4 | Analyzing EKG Rhythm Strips: Chapter 3 plus a 12-lead review, 1 h 10 min (Week 3 recording from 33:18) | [Week_04_Analyzing_EKG_Rhythm_Strips.pdf](output/Week_04_Analyzing_EKG_Rhythm_Strips.pdf) |
-| 6 | Sinus Rhythms: Chapter 4, 55 min | [Week_06_Sinus_Rhythms.pdf](output/Week_06_Sinus_Rhythms.pdf) |
-| 7 | Atrial and Junctional Rhythms: Chapters 5–6, 1 h 50 min (also posted under Week 8; to be split at 1:08:30) | [Week_07_Atrial_and_Junctional_Rhythms.pdf](output/Week_07_Atrial_and_Junctional_Rhythms.pdf) |
-| 10 | Ventricular Rhythms: Chapter 8, 1 h 11 min | [Week_10_Ventricular_Rhythms.pdf](output/Week_10_Ventricular_Rhythms.pdf) |
-| 11 | Ventricular and Heart Block Rhythms: Chapter 8 practice (first 56 min, screen share not recorded, transcript only) and Chapter 7, 1 h 46 min | [Week_11_Ventricular_and_Heart_Block_Rhythms.pdf](output/Week_11_Ventricular_and_Heart_Block_Rhythms.pdf) |
-| 12 | Pacemakers: Appendix E, 29 min (posted for Weeks 12 and 13) | [Week_12_Pacemakers.pdf](output/Week_12_Pacemakers.pdf) |
+- **Transcript by slide** (`Week_NN_Topic.pdf`): every slide with everything said while it was on screen.
+- **Study guide** (`Week_NN_Topic_Study_Guide.pdf`): a visual summary of the lecture with slide images, colour-coded ECG diagrams, rules tables, the instructor's exam tips, a cheat sheet and a self-quiz with answers.
+
+| Week | Lecture | Transcript | Study guide |
+|---|---|---|---|
+| 1 | Cardiac Anatomy and Physiology: Appendix A, 22 min | [Week_01_Cardiac_Anatomy_and_Physiology.pdf](output/Week_01_Cardiac_Anatomy_and_Physiology.pdf) | [Week_01_Cardiac_Anatomy_and_Physiology_Study_Guide.pdf](output/Week_01_Cardiac_Anatomy_and_Physiology_Study_Guide.pdf) |
+| 1 | Electrophysiology: Chapter 1, 27 min (also posted under Week 2) | [Week_01_2_Electrophysiology.pdf](output/Week_01_2_Electrophysiology.pdf) | [Week_01_2_Electrophysiology_Study_Guide.pdf](output/Week_01_2_Electrophysiology_Study_Guide.pdf) |
+| 2 | 12 Lead EKGs: Appendix C, 26 min | [Week_02_12_Lead_EKGs.pdf](output/Week_02_12_Lead_EKGs.pdf) | [Week_02_12_Lead_EKGs_Study_Guide.pdf](output/Week_02_12_Lead_EKGs_Study_Guide.pdf) |
+| 3 | Waves and Measurements: Chapter 2, 33 min (first part of the Week 3 recording) | [Week_03_Waves_and_Measurements.pdf](output/Week_03_Waves_and_Measurements.pdf) | [Week_03_Waves_and_Measurements_Study_Guide.pdf](output/Week_03_Waves_and_Measurements_Study_Guide.pdf) |
+| 4 | Analyzing EKG Rhythm Strips: Chapter 3 plus a 12-lead review, 1 h 10 min (Week 3 recording from 33:18) | [Week_04_Analyzing_EKG_Rhythm_Strips.pdf](output/Week_04_Analyzing_EKG_Rhythm_Strips.pdf) | [Week_04_Analyzing_EKG_Rhythm_Strips_Study_Guide.pdf](output/Week_04_Analyzing_EKG_Rhythm_Strips_Study_Guide.pdf) |
+| 5 | Hourly Exam 1, no lecture | | |
+| 6 | Sinus Rhythms: Chapter 4, 55 min | [Week_06_Sinus_Rhythms.pdf](output/Week_06_Sinus_Rhythms.pdf) | [Week_06_Sinus_Rhythms_Study_Guide.pdf](output/Week_06_Sinus_Rhythms_Study_Guide.pdf) |
+| 7 | Atrial Rhythms: Chapter 5, 1 h 8 min (first part of the Atrial and Junctional Rhythms recording) | [Week_07_Atrial_Rhythms.pdf](output/Week_07_Atrial_Rhythms.pdf) | [Week_07_Atrial_Rhythms_Study_Guide.pdf](output/Week_07_Atrial_Rhythms_Study_Guide.pdf) |
+| 8 | Junctional Rhythms: Chapter 6, 42 min (same recording from 1:08:30) | [Week_08_Junctional_Rhythms.pdf](output/Week_08_Junctional_Rhythms.pdf) | [Week_08_Junctional_Rhythms_Study_Guide.pdf](output/Week_08_Junctional_Rhythms_Study_Guide.pdf) |
+| 9 | Hourly Exam 2, no lecture | | |
+| 10 | Ventricular Rhythms: Chapter 8, 1 h 11 min | [Week_10_Ventricular_Rhythms.pdf](output/Week_10_Ventricular_Rhythms.pdf) | [Week_10_Ventricular_Rhythms_Study_Guide.pdf](output/Week_10_Ventricular_Rhythms_Study_Guide.pdf) |
+| 11 | Ventricular and Heart Block Rhythms: Chapter 8 practice (first 56 min, screen share not recorded, transcript only) and Chapter 7, 1 h 46 min | [Week_11_Ventricular_and_Heart_Block_Rhythms.pdf](output/Week_11_Ventricular_and_Heart_Block_Rhythms.pdf) | [Week_11_Heart_Block_Rhythms_Study_Guide.pdf](output/Week_11_Heart_Block_Rhythms_Study_Guide.pdf) |
+| 12–13 | Pacemakers: Appendix E, 29 min | [Week_12_Pacemakers.pdf](output/Week_12_Pacemakers.pdf) | [Week_12_Pacemakers_Study_Guide.pdf](output/Week_12_Pacemakers_Study_Guide.pdf) |
 
 ## Finding and downloading lectures
 
