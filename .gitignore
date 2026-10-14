@@ -1,0 +1,6 @@
+# Lecture recordings and intermediate media (large; keep out of git)
+*.mkv
+*.mp4
+*.ts
+*.wav
+*.m4a
