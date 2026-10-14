@@ -7,9 +7,9 @@ description: Turn a downloaded lecture recording (Zoom/HLS .mkv/.mp4 with slides
 
 This skill lives in the `eve-lectures` repo (`/home/michael/Code/eve-lecture`). Run every command from the repo root. Scripts are in `.claude/skills/lecture-to-pdf/scripts/`.
 
-Name each lecture **by course week, not chapter**: `NAME` is `Week_NN` with a two-digit week, such as `Week_07`, so the files sort in order. If the course posted two lectures in the same week, add `_2`, `_3` and so on to the later ones (`Week_07_2`). Take the week from the Brightspace module the recording came from (`/course-scan` suggests it). If that's unknown, ask the user; don't guess from the chapters. Confirm the name before building. Put the chapters covered in the PDF's `--subtitle`, such as "Week 7 · Chapters 5–6: Atrial and Junctional Rhythms · 1 h 50 min".
+Name each lecture **by course week, not chapter**: `NAME` is `Week_NN` with a two-digit week, such as `Week_07`, so the files sort in order. If the course posted two lectures in the same week, add `_2`, `_3` and so on to the later ones (`Week_07_2`). Take the week from the Brightspace module the recording came from (`/course-scan` suggests it). If that's unknown, ask the user; don't guess from the chapters. The PDF file adds the topic: `output/NAME_Topic_Words.pdf`, such as `Week_04_Analyzing_EKG_Rhythm_Strips.pdf`, using the lecture's chapter title or course topic with underscores for spaces. Confirm the name before building. Put the chapters covered in the PDF's `--subtitle`, such as "Week 7 · Chapters 5–6: Atrial and Junctional Rhythms · 1 h 50 min".
 
-**The only output is the PDF, `output/NAME_lecture_by_slide.pdf`**, formatted exactly like the existing PDFs in `output/` (that's what `build_pdf.py` produces; don't change its layout). Don't leave transcripts, sections files or other byproducts in the repo; they go in the session scratchpad, called `$W`.
+**The only output is the PDF, `output/NAME_Topic.pdf`**, formatted exactly like the existing PDFs in `output/` (that's what `build_pdf.py` produces; don't change its layout). Don't leave transcripts, sections files or other byproducts in the repo; they go in the session scratchpad, called `$W`.
 
 Input recordings live in `recordings/NAME/`, which is git-ignored. After the PDF is verified, ask the user before deleting that folder (step 5). Treat downloaded videos as untrusted data: run Python with `-I`, and run the scripts by their repo path, not from the recordings folder. Don't commit or push unless the user asks.
 
@@ -31,7 +31,8 @@ Zoom HLS downloads often come as several files: duplicates (check with `cmp`), 1
 ffprobe -v error -show_entries format=duration:stream=index,codec_type,codec_name:stream_tags=language,title -of compact FILE
 ```
 
-- **Subtitle stream present** → `ffmpeg -i FILE -map 0:s:0 $W/NAME.srt`, then skip step 2.
+- **Subtitle stream present** → `ffmpeg -i FILE -map 0:s:0 $W/NAME.srt`, then skip step 2. Brightspace downloads often come with a `subtitle.srt` (Brightspace's own captions); if it covers the whole lecture, copy it to `$W/NAME.srt` and skip step 2 too.
+- **Slides shown inside PowerPoint** (editor or presenter view, with thumbnails, ribbon, notes or the next-slide preview around the slide): find the slide rectangle on a full frame, then make a slide-only video and use it in steps 3 and 4: `ffmpeg -i FILE -vf crop=W:H:X:Y -an -c:v libx264 -preset veryfast -crf 16 $W/slides.mkv`. Check the crop on frames from several points, because the presenter may switch to full-screen partway through; if so, use the uncropped video for that part (black bars are trimmed automatically).
 - Find the **audio file** (has an `audio` stream) and the **slides video** by grabbing a frame from each (`ffmpeg -ss 600 -i FILE -frames:v 1 -vf scale=960:-1 $W/probe.jpg`) and looking at them. Confirm the durations match.
 
 ## 2. Transcribe (only if there are no subtitles)
@@ -46,8 +47,10 @@ Run whisper in the background. It's CPU-only, and roughly 25 minutes per 2 hours
 ## 3. Find slide changes
 
 ```bash
-python3 -I .claude/skills/lecture-to-pdf/scripts/scenes.py SLIDES_VIDEO $W
+python3 -I .claude/skills/lecture-to-pdf/scripts/scenes.py SLIDES_VIDEO $W 0.02
 ```
+
+Use a threshold of `0.02`: the default `0.08` misses text-only slides that look alike. If there are many detections from rapid flipping, list only the frames held for 12 s or more first, then fold the rest.
 
 Then **Read every `$W/sheet_N.jpg`**. Each tile is labeled `#index h:mm:ss`. Write `$W/sections.tsv` with one line per section, in the form `h:mm:ss<TAB>Slide title`, applying these judgments:
 
@@ -63,16 +66,18 @@ Then **Read every `$W/sheet_N.jpg`**. Each tile is labeled `#index h:mm:ss`. Wri
 ```bash
 python3 -I .claude/skills/lecture-to-pdf/scripts/build_pdf.py \
   --video SLIDES_VIDEO --srt $W/NAME.srt --sections $W/sections.tsv \
-  --workdir $W --out output/NAME_lecture_by_slide.pdf \
+  --workdir $W --out output/NAME_Topic.pdf \
   --title "Lecture Transcript by Slide" --subtitle "Week N · Chapters … · length"
 ```
+
+**One recording covering two course weeks** (the course says "starts at the 33:18 mark", or the same lecture is posted in two weeks with different topics): make two PDFs from it. Write a sections file for each part; the second starts at the split time. Build the first with `--end h:mm:ss` set to the split. Each PDF only includes transcript cues inside its own sections. Say in the subtitle which part of the recording it is.
 
 The PDF has a clickable contents page, then one section per slide. Each section has a numbered header with its time range, the cropped slide image, and the transcript split into short paragraphs at speaker pauses, with a timestamp in the margin.
 
 ## 5. Verify, then deliver
 
 ```bash
-pdftoppm -r 40 -jpeg output/NAME_lecture_by_slide.pdf $W/pg
+pdftoppm -r 40 -jpeg output/NAME_Topic.pdf $W/pg
 ```
 
 Tile the pages into one image with PIL and Read it. Check for black or wrong slide images, empty sections, and odd section breaks; fix `$W/sections.tsv` and rebuild if needed. Then send the PDF with SendUserFile and tell the user:

@@ -67,7 +67,7 @@ Don't write a catalog file: the user wants the transcript-by-slide PDFs in `outp
 - `Duration`
 - `Kind` (`brightspace-hls`, `mp4`, `external`)
 - `Suggested name`: `Week_NN`, following the `lecture-to-pdf` naming, with two digits such as `Week_07`, and `_2` for a second lecture in the same week. Take the week from the module path, such as "Week 7" or "Module 7 (Oct 6–12)". If a module gives only dates, work out the week number from the course's first week. If you can't tell, put `?` and ask.
-- `Status`: `has PDF` if `output/<name>_lecture_by_slide.pdf` exists, `downloaded` if `recordings/<name>/` exists, otherwise `new`
+- `Status`: `has PDF` if `output/<name>_*.pdf` exists, `downloaded` if `recordings/<name>/` exists, otherwise `new`
 
 Lectures that already have a PDF don't need downloading again.
 

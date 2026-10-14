@@ -6,11 +6,16 @@ Study notes made from Eve's recorded lectures. Each lecture becomes a **transcri
 
 ## Lectures
 
-All PDFs are in [`output/`](output/), named by course week (`Week_07_lecture_by_slide.pdf`, with `_2` for a second lecture in the same week).
+All PDFs are in [`output/`](output/), named by course week and topic (`Week_04_Analyzing_EKG_Rhythm_Strips.pdf`, with `_2` for a second lecture in the same week).
 
 | Week | Lecture | PDF |
 |---|---|---|
-| 7 | Atrial and Junctional Rhythms: Chapters 5–6, 1 h 50 min (also posted under Week 8) | [Week_07_lecture_by_slide.pdf](output/Week_07_lecture_by_slide.pdf) |
+| 1 | Cardiac Anatomy and Physiology: Appendix A, 22 min | [Week_01_Cardiac_Anatomy_and_Physiology.pdf](output/Week_01_Cardiac_Anatomy_and_Physiology.pdf) |
+| 1 | Electrophysiology: Chapter 1, 27 min (also posted under Week 2) | [Week_01_2_Electrophysiology.pdf](output/Week_01_2_Electrophysiology.pdf) |
+| 2 | 12 Lead EKGs: Appendix C, 26 min | [Week_02_12_Lead_EKGs.pdf](output/Week_02_12_Lead_EKGs.pdf) |
+| 3 | Waves and Measurements: Chapter 2, 33 min (first part of the Week 3 recording) | [Week_03_Waves_and_Measurements.pdf](output/Week_03_Waves_and_Measurements.pdf) |
+| 4 | Analyzing EKG Rhythm Strips: Chapter 3 plus a 12-lead review, 1 h 10 min (Week 3 recording from 33:18) | [Week_04_Analyzing_EKG_Rhythm_Strips.pdf](output/Week_04_Analyzing_EKG_Rhythm_Strips.pdf) |
+| 7 | Atrial and Junctional Rhythms: Chapters 5–6, 1 h 50 min (also posted under Week 8; to be split at 1:08:30) | [Week_07_Atrial_and_Junctional_Rhythms.pdf](output/Week_07_Atrial_and_Junctional_Rhythms.pdf) |
 
 ## Finding and downloading lectures
 
@@ -33,7 +38,7 @@ The skill, in [`.claude/skills/lecture-to-pdf/`](.claude/skills/lecture-to-pdf/S
 1. **Inspect the files.** Zoom downloads often include duplicates, 10-second `.ts` fragments, and separate renditions: one with the screen share (often silent) and one with the audio. If the file has a subtitle track, that's used instead of transcribing.
 2. **Transcribe** the audio with [whisper.cpp](https://github.com/ggerganov/whisper.cpp), using the `large-v3-turbo` model.
 3. **Find slide changes.** [`scenes.py`](.claude/skills/lecture-to-pdf/scripts/scenes.py) detects screen changes and makes labeled contact sheets. Claude reads them and writes a temporary slide list (one `h:mm:ss<TAB>Slide title` line per slide), leaving out quick flips, slide-sorter views and editor flashes.
-4. **Build the PDF.** [`build_pdf.py`](.claude/skills/lecture-to-pdf/scripts/build_pdf.py) grabs a cropped image of each slide, splits the transcript into paragraphs at speaker pauses, and prints `output/<name>_lecture_by_slide.pdf` with headless Chrome. The formatting matches the Chapter 5–6 PDF.
+4. **Build the PDF.** [`build_pdf.py`](.claude/skills/lecture-to-pdf/scripts/build_pdf.py) grabs a cropped image of each slide, splits the transcript into paragraphs at speaker pauses, and prints `output/<name>_<Topic>.pdf` with headless Chrome. The formatting matches the Chapter 5–6 PDF.
 5. **Check** the rendered pages, then fix the slide list and rebuild if needed.
 
 ### Running the scripts by hand
@@ -43,7 +48,7 @@ python3 -I .claude/skills/lecture-to-pdf/scripts/scenes.py SLIDES_VIDEO WORKDIR
 # read WORKDIR/sheet_*.jpg and write WORKDIR/sections.tsv
 python3 -I .claude/skills/lecture-to-pdf/scripts/build_pdf.py \
   --video SLIDES_VIDEO --srt WORKDIR/<name>.srt --sections WORKDIR/sections.tsv \
-  --workdir WORKDIR --out output/<name>_lecture_by_slide.pdf --subtitle "Week N · Chapters … · length"
+  --workdir WORKDIR --out output/<name>_<Topic>.pdf --subtitle "Week N · Chapters … · length"
 ```
 
 ## Requirements

@@ -3,13 +3,14 @@
 
 Usage:
   python3 -I build_pdf.py --video SCREEN_VIDEO --srt TRANSCRIPT.srt --sections SECTIONS.tsv \
-      --workdir WORKDIR --out OUT.pdf --title "Lecture Transcript by Slide" [--subtitle "..."]
+      --workdir WORKDIR --out OUT.pdf --title "Lecture Transcript by Slide" [--subtitle "..."] [--end h:mm:ss]
 
 SECTIONS.tsv: one line per slide section, "h:mm:ss<TAB>Slide title", in time order.
-Each section runs until the next section's start (the last one runs to the end of the video).
+Each section runs until the next section's start (the last one runs to the end of the video, or to --end).
+To split one recording into two PDFs, give each its own sections file covering its part, and --end for the first.
 """
 import argparse, html, os, shutil, subprocess
-from PIL import Image
+from PIL import Image, ImageStat
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--video", required=True)
@@ -19,6 +20,7 @@ ap.add_argument("--workdir", required=True)
 ap.add_argument("--out", required=True)
 ap.add_argument("--title", default="Lecture Transcript by Slide")
 ap.add_argument("--subtitle", default="")
+ap.add_argument("--end", help="h:mm:ss where the last section ends, if before the end of the video")
 args = ap.parse_args()
 
 
@@ -37,7 +39,7 @@ duration = float(subprocess.run(
     capture_output=True, text=True, check=True).stdout.strip())
 
 sections = [l.split("\t", 1) for l in open(args.sections).read().strip().split("\n") if l.strip()]
-starts = [secs(t) for t, _ in sections] + [duration]
+starts = [secs(t) for t, _ in sections] + [secs(args.end) if args.end else duration]
 
 cues = []
 for block in open(args.srt, encoding="utf-8").read().strip().split("\n\n"):
@@ -76,13 +78,16 @@ toc, body = [], []
 for i, (t, title) in enumerate(sections):
     st, en = starts[i], starts[i + 1]
     img = os.path.join(imgdir, f"slide_{i + 1:03}.jpg")
-    # Grab a few seconds in (past transitions); if that frame is mostly blank, retry mid-section.
-    for g in (st + min(6, (en - st) / 2), (st + en) / 2):
+    # Grab a few seconds in (past transitions). If that frame is mostly blank or dark (a black
+    # frame, or Zoom's speaker-name screen), retry mid-section, then just after the start.
+    for g in (st + min(6, (en - st) / 2), (st + en) / 2, st + min(1, (en - st) / 4)):
         subprocess.run(["ffmpeg", "-v", "quiet", "-ss", str(g), "-i", args.video, "-frames:v", "1", "-y", img],
                        check=True)
         im = Image.open(img).convert("RGB")
         bbox = im.point(lambda p: 255 if p > 24 else 0).convert("L").getbbox()
-        if bbox and (bbox[2] - bbox[0]) * (bbox[3] - bbox[1]) > 0.2 * im.width * im.height:
+        if bbox:
+            mean = sum(ImageStat.Stat(im.crop(bbox).convert("L")).mean)
+        if bbox and (bbox[2] - bbox[0]) * (bbox[3] - bbox[1]) > 0.2 * im.width * im.height and mean > 90:
             break
     if bbox:
         im = im.crop(bbox)  # trim black pillarbox around 4:3 slides
