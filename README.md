@@ -15,7 +15,10 @@ All PDFs are in [`output/`](output/), named by course week and topic (`Week_04_A
 | 2 | 12 Lead EKGs: Appendix C, 26 min | [Week_02_12_Lead_EKGs.pdf](output/Week_02_12_Lead_EKGs.pdf) |
 | 3 | Waves and Measurements: Chapter 2, 33 min (first part of the Week 3 recording) | [Week_03_Waves_and_Measurements.pdf](output/Week_03_Waves_and_Measurements.pdf) |
 | 4 | Analyzing EKG Rhythm Strips: Chapter 3 plus a 12-lead review, 1 h 10 min (Week 3 recording from 33:18) | [Week_04_Analyzing_EKG_Rhythm_Strips.pdf](output/Week_04_Analyzing_EKG_Rhythm_Strips.pdf) |
+| 6 | Sinus Rhythms: Chapter 4, 55 min | [Week_06_Sinus_Rhythms.pdf](output/Week_06_Sinus_Rhythms.pdf) |
 | 7 | Atrial and Junctional Rhythms: Chapters 5–6, 1 h 50 min (also posted under Week 8; to be split at 1:08:30) | [Week_07_Atrial_and_Junctional_Rhythms.pdf](output/Week_07_Atrial_and_Junctional_Rhythms.pdf) |
+| 10 | Ventricular Rhythms: Chapter 8, 1 h 11 min | [Week_10_Ventricular_Rhythms.pdf](output/Week_10_Ventricular_Rhythms.pdf) |
+| 12 | Pacemakers: Appendix E, 29 min (posted for Weeks 12 and 13) | [Week_12_Pacemakers.pdf](output/Week_12_Pacemakers.pdf) |
 
 ## Finding and downloading lectures
 
