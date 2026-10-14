@@ -80,6 +80,7 @@ for i, (t, title) in enumerate(sections):
     img = os.path.join(imgdir, f"slide_{i + 1:03}.jpg")
     # Grab a few seconds in (past transitions). If that frame is mostly blank or dark (a black
     # frame, or Zoom's speaker-name screen), retry mid-section, then just after the start.
+    ok = False
     for g in (st + min(6, (en - st) / 2), (st + en) / 2, st + min(1, (en - st) / 4)):
         subprocess.run(["ffmpeg", "-v", "quiet", "-ss", str(g), "-i", args.video, "-frames:v", "1", "-y", img],
                        check=True)
@@ -88,19 +89,22 @@ for i, (t, title) in enumerate(sections):
         if bbox:
             mean = sum(ImageStat.Stat(im.crop(bbox).convert("L")).mean)
         if bbox and (bbox[2] - bbox[0]) * (bbox[3] - bbox[1]) > 0.2 * im.width * im.height and mean > 90:
+            ok = True
             break
     if bbox:
         im = im.crop(bbox)  # trim black pillarbox around 4:3 slides
     im.thumbnail((1400, 1400))
     im.save(img, quality=85)
 
+    # No slide visible anywhere in the section (screen share not recorded): leave the image out.
+    fig = f'<figure><img src="file://{img}"></figure>' if ok else ""
     paras = paragraphs([c for c in cues if st <= c[0] < en])
     toc.append(f'<li><a href="#s{i + 1}"><span class="tt">{fmt(st)}</span>{html.escape(title)}</a></li>')
     ptxt = "".join(f'<div class="para"><span class="ts">{fmt(a)}</span><p>{html.escape(x)}</p></div>'
                    for a, x in paras) or '<p class="none">(Nothing was said while this slide was shown.)</p>'
     body.append(f'''<section id="s{i + 1}"><header><span class="num">{i + 1}</span><div><h2>{html.escape(title)}</h2>
 <div class="time">{fmt(st)} – {fmt(en)}</div></div></header>
-<figure><img src="file://{img}"></figure>{ptxt}</section>''')
+{fig}{ptxt}</section>''')
 
 subtitle = html.escape(args.subtitle) + ("<br>" if args.subtitle else "")
 doc = f"""<!doctype html><html><head><meta charset="utf-8"><title>{html.escape(args.title)}</title><style>

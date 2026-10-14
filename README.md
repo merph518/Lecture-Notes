@@ -18,6 +18,7 @@ All PDFs are in [`output/`](output/), named by course week and topic (`Week_04_A
 | 6 | Sinus Rhythms: Chapter 4, 55 min | [Week_06_Sinus_Rhythms.pdf](output/Week_06_Sinus_Rhythms.pdf) |
 | 7 | Atrial and Junctional Rhythms: Chapters 5–6, 1 h 50 min (also posted under Week 8; to be split at 1:08:30) | [Week_07_Atrial_and_Junctional_Rhythms.pdf](output/Week_07_Atrial_and_Junctional_Rhythms.pdf) |
 | 10 | Ventricular Rhythms: Chapter 8, 1 h 11 min | [Week_10_Ventricular_Rhythms.pdf](output/Week_10_Ventricular_Rhythms.pdf) |
+| 11 | Ventricular and Heart Block Rhythms: Chapter 8 practice (first 56 min, screen share not recorded, transcript only) and Chapter 7, 1 h 46 min | [Week_11_Ventricular_and_Heart_Block_Rhythms.pdf](output/Week_11_Ventricular_and_Heart_Block_Rhythms.pdf) |
 | 12 | Pacemakers: Appendix E, 29 min (posted for Weeks 12 and 13) | [Week_12_Pacemakers.pdf](output/Week_12_Pacemakers.pdf) |
 
 ## Finding and downloading lectures
